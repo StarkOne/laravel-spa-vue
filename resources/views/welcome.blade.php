@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
         <script defer src="{{ mix('/js/app.js') }}"></script>
     </head>
     <body>
