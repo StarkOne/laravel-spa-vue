@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('bookables', 'Api\BookableController')->only(['index', 'show']);
+Route::get('bookables/{bookable}/availability', 'Api\BookableAvailabilityController')->name('bookable.availability.show');
