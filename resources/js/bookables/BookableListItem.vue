@@ -1,8 +1,10 @@
 <template>
-    <div class="card mb-4">
+    <div class="card w-100">
         <div class="card-body">
-            <h5 class="card-title">{{itemTitle}}</h5>
-            <p class="card-text">{{itemContent}}</p>
+            <h5 class="card-title">
+                <router-link :to="{ name: 'bookable', params: {id} }">{{title}}</router-link>
+            </h5>
+            <p class="card-text">{{description}}</p>
         </div>
     </div>
 </template>
@@ -11,12 +13,9 @@
     export default {
         name: "BookableListItem",
         props: {
-            'itemTitle': String,
-            'itemContent': String,
-            'price': Number
-        },
-        mounted() {
-            console.log(this.$props);
+            'id': Number,
+            'title': String,
+            'description': String,
         }
     }
 </script>

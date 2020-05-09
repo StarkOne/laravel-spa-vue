@@ -1,16 +1,16 @@
 <template>
     <div>
-        <div v-for="row in rows" :key="'row' + row" class="row">
-            <div class="col" v-for="(bookable, column) in bookableInRow(row)"
-                 :key="'row' + row + 'column'">
+        <div v-if="!loading" v-for="row in rows" :key="'row' + row" class="row mb-4">
+            <div class="col d-flex align-items-stretch"
+                 v-for="(bookable, column) in bookableInRow(row)"
+                 :key="'row' + row + 'column' + column">
                 <Bookable-list-item
-                    :key="index"
-                    :item-title="bookable.title"
-                    :item-content="bookable.content"
-                    :price="1000">
+                    :key="column"
+                    v-bind="bookable"
+                >
                 </Bookable-list-item>
             </div>
-            <div class="col" v-for="p in placeholdersInRow(row)" :key="'placeholder' + row + 'p'" ></div>
+            <div class="col" v-for="(p, i) in placeholdersInRow(row)" :key="'placeholder' + row + 'p' + i" ></div>
         </div>
     </div>
 </template>
@@ -23,37 +23,14 @@
         data() {
             return {
                 columns: 3,
-                bookables: [
-                    {
-                        title: "Cheap Vila",
-                        content: "A very cheap vila",
-                    },
-                    {
-                        title: "Cheap Vila 222",
-                        content: "A very cheap vila 222",
-                    },
-                    {
-                        title: "Cheap Vila 222",
-                        content: "A very cheap vila 222",
-                    },
-                    {
-                        title: "Cheap Vila 222",
-                        content: "A very cheap vila 222",
-                    },
-                    {
-                        title: "Cheap Vila 222",
-                        content: "A very cheap vila 222",
-                    },
-                    {
-                        title: "Cheap Vila 222",
-                        content: "A very cheap vila 222",
-                    },
-                    {
-                        title: "Cheap Vila 222",
-                        content: "A very cheap vila 222",
-                    },
-                ],
+                loading: true,
+                bookables: [],
             }
+        },
+        async created() {
+            const bookables = await axios.get('/api/bookables');
+            this.bookables = bookables.data;
+            this.loading = false;
         },
         methods: {
             bookableInRow(row) {
